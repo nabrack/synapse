@@ -1,26 +1,25 @@
 {
-	"name": "csv_dataset",
+	"name": "parquet_source",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
-		"type": "DelimitedText",
+		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "file1.csv",
+				"fileName": "file1.parquet",
 				"folderPath": "external",
 				"fileSystem": "partyadlsfs"
 			},
-			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"quoteChar": "\""
+			"compressionCodec": "snappy"
 		},
 		"schema": [
 			{
-				"type": "String"
+				"name": "addntl_detls",
+				"type": "UTF8"
 			}
 		]
 	}
