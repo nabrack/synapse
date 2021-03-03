@@ -1,0 +1,23 @@
+{
+	"name": "special_char_repro",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "partysynapse-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "FSTPP081_MCC_ADJ_20210301.csv",
+				"folderPath": "external",
+				"fileSystem": "partyadlsfs"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
