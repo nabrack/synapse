@@ -1,0 +1,19 @@
+{
+	"name": "special_character_table",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "partysynapse-WorkspaceDefaultSqlServer",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"DBName": "partypool"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "dbo.FSTPP081_MCC_ADJ"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

@@ -1,0 +1,10 @@
+{
+	"name": "party-primary-adls",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/af0ed107-820a-45dc-8bb9-2c50b93da054/resourceGroups/Default-SQL-EastUS/providers/Microsoft.Storage/storageAccounts/partyadls",
+		"groupId": "dfs",
+		"fqdns": [
+			"partyadls.dfs.core.windows.net"
+		]
+	}
+}

@@ -15,9 +15,11 @@
 				"fileSystem": "partyadlsfs"
 			},
 			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"quoteChar": "\""
+			"escapeChar": "",
+			"firstRowAsHeader": true,
+			"quoteChar": ""
 		},
 		"schema": []
-	}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
 }
