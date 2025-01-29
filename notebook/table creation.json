@@ -1,0 +1,83 @@
+{
+	"name": "table creation",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "partyspark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "d48d24fe-0cb5-4e58-b584-2999ef59b3b1"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Synapse/workspaces/synapseparty/bigDataPools/partyspark",
+				"name": "partyspark",
+				"type": "Spark",
+				"endpoint": "https://synapseparty.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/partyspark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"spark.conf.set(\"spark.storage.synapse.linkedServiceName\", \"LimitedAccessStorage\")\r\n",
+					"spark.conf.set(\"fs.azure.account.oauth.provider.type\", \"com.microsoft.azure.synapse.tokenlibrary.LinkedServiceBasedTokenProvider\")\r\n",
+					"\r\n",
+					"##spark.sql(\"CREATE TABLE limited.myparquettable(id int, name string, birthdate date) USING Parquet\")\r\n",
+					"##spark.sql(\"DROP TABLE limited.myparquettable\")"
+				],
+				"execution_count": 19
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"spark.sql(\"INSERT INTO limited.myparquettable (id, name, birthdate) VALUES (1, 'name', cast('2022-07-07' as date))\")"
+				],
+				"execution_count": 18
+			}
+		]
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"name": "sqldb-endpoint",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Sql/servers/partysqldb",
+		"groupId": "sqlServer",
+		"fqdns": [
+			"partysqldb.database.windows.net"
+		]
+	}
+}

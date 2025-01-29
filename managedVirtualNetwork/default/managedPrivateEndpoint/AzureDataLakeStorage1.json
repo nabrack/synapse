@@ -1,0 +1,10 @@
+{
+	"name": "AzureDataLakeStorage1",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Storage/storageAccounts/synapsepartyfs",
+		"groupId": "dfs",
+		"fqdns": [
+			"synapsepartyfs.dfs.core.windows.net"
+		]
+	}
+}

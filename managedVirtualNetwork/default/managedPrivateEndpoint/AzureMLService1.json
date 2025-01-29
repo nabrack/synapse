@@ -1,0 +1,10 @@
+{
+	"name": "AzureMLService1",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.MachineLearningServices/workspaces/mlparty",
+		"groupId": "amlworkspace",
+		"fqdns": [
+			"ml-mlparty-eastus-6b8fe9b9-d6a0-468f-969c-44bb92279664.eastus.notebooks.azure.net"
+		]
+	}
+}

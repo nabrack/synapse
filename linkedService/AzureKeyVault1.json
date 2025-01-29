@@ -1,0 +1,11 @@
+{
+	"name": "AzureKeyVault1",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://mlparty2276798987.vault.azure.net/"
+		}
+	}
+}

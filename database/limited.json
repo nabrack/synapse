@@ -1,0 +1,25 @@
+{
+	"name": "limited",
+	"properties": {
+		"Name": "limited",
+		"EntityType": "DATABASE",
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"Properties": {
+			"IsSyMSCDMDatabase": true
+		},
+		"Source": {
+			"Provider": "ADLS",
+			"Location": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/",
+			"Properties": {
+				"FormatType": "parquet",
+				"LinkedServiceName": "LimitedAccessStorage"
+			}
+		},
+		"PublishStatus": "PUBLISHED",
+		"ObjectVersion": 1,
+		"ObjectId": "5e47da0e-7622-4c41-a8db-3ad067a52bb7"
+	},
+	"type": "DATABASE"
+}

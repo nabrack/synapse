@@ -1,0 +1,20 @@
+{
+	"name": "failure",
+	"properties": {
+		"activities": [
+			{
+				"name": "Fail1",
+				"type": "Fail",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"message": "Failure",
+					"errorCode": "20"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-04-15T17:15:48Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

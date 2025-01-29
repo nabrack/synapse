@@ -1,0 +1,25 @@
+{
+	"name": "AzureDataExplorerTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataExplorer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataExplorerTable",
+		"schema": [
+			{
+				"name": "column1",
+				"type": "string"
+			},
+			{
+				"name": "column2",
+				"type": "long"
+			}
+		],
+		"typeProperties": {
+			"table": "TableTest"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

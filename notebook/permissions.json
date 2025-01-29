@@ -1,0 +1,72 @@
+{
+	"name": "permissions",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "partyspark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "46f8af3b-3bd0-4fdf-ba4a-5dbd30f12265"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Synapse/workspaces/synapseparty/bigDataPools/partyspark",
+				"name": "partyspark",
+				"type": "Spark",
+				"endpoint": "https://synapseparty.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/partyspark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"from notebookutils import mssparkutils\r\n",
+					"\r\n",
+					"spark.conf.set(\"spark.storage.synapse.linkedServiceName\", \"LimitedAccessStorage\")\r\n",
+					"spark.conf.set(\"fs.azure.account.oauth.provider.type\", \"com.microsoft.azure.synapse.tokenlibrary.LinkedServiceBasedTokenProvider\")\r\n",
+					"\r\n",
+					"print(mssparkutils.credentials.getConnectionStringOrCreds('LimitedAccessStorage'))\r\n",
+					"#print(mssparkutils.env.getUserName())\r\n",
+					"#print(mssparkutils.env.getUserId())\r\n",
+					"\r\n",
+					"datalake_root_path = \"abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/\"\r\n",
+					"print(mssparkutils.fs.ls(datalake_root_path + \"output\"))\r\n",
+					""
+				],
+				"execution_count": 13
+			}
+		]
+	}
+}

@@ -1,0 +1,25 @@
+{
+	"name": "pool_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "synapseparty-WorkspaceDefaultSqlServer",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"DBName": "dedicatedparty"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "datetest",
+				"type": "datetime2",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"tableName": "dbo.datetester"
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

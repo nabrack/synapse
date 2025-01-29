@@ -1,0 +1,17 @@
+{
+	"name": "large_result_set_repro",
+	"properties": {
+		"content": {
+			"query": "WITH set1 AS (\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://synapsepartyfs.dfs.core.windows.net/synapsepartyfs/test.parquet',\n        FORMAT='PARQUET'\n    ) AS [results]\n),\nset2 AS (\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://synapsepartyfs.dfs.core.windows.net/synapsepartyfs/test.parquet',\n        FORMAT='PARQUET'\n    ) AS [results]\n),\nset3 AS (\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://synapsepartyfs.dfs.core.windows.net/synapsepartyfs/test.parquet',\n        FORMAT='PARQUET'\n    ) AS [results]\n)\nSELECT * FROM set1 \nLEFT JOIN set2 ON set1.Id = set2.Id\nLEFT JOIN set3 ON set1.Id = set3.Id",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

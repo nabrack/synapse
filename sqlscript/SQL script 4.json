@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 4",
+	"properties": {
+		"content": {
+			"query": "select s.name as schema_name,\n    s.schema_id,\n    p.name as schema_owner\nfrom sys.schemas s\n    inner join sys.database_principals p\n        on p.principal_id = s.principal_id\norder by s.name\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "default",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

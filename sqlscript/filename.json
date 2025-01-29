@@ -1,0 +1,17 @@
+{
+	"name": "filename",
+	"properties": {
+		"content": {
+			"query": "-- This is auto-generated code\nSELECT\n    TOP 100 result.filename() FILE_NAME, *\nFROM\n    OPENROWSET(\n        BULK 'https://synapsepartyfs.dfs.core.windows.net/synapsepartyfs/date-format.csv',\n        FORMAT = 'CSV', PARSER_VERSION = '2.0' ) AS [result]\n\n\nCREATE PROCEDURE query_with_filename\nAS BEGIN\n    SELECT\n    TOP 100 result.filename() FILE_NAME, *\nFROM\n    OPENROWSET(\n        BULK 'https://synapsepartyfs.dfs.core.windows.net/synapsepartyfs/date-format.csv',\n        FORMAT = 'CSV', PARSER_VERSION = '2.0' ) AS [result]\nEND\n\nEXEC query_with_filename\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "externals",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"name": "SampleJsonOutput",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "synapseparty-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "sample_json_output.json",
+				"fileSystem": "synapsepartyfs"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

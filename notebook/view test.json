@@ -1,0 +1,67 @@
+{
+	"name": "view test",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "partyspark",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "21e4e6d6-091c-48c0-a902-56387339ae96"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Synapse/workspaces/synapseparty/bigDataPools/partyspark",
+				"name": "partyspark",
+				"type": "Spark",
+				"endpoint": "https://synapseparty.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/partyspark",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"df = spark.read\\\r\n",
+					".format(\"com.microsoft.sqlserver.jdbc.spark\")\\\r\n",
+					".option(\"url\", \"jdbc:sqlserver://synapseparty.sql.azuresynapse.net:1433;database=dedicatedparty;user=sqladminuser@synapseparty;password=protoVP01;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.sql.azuresynapse.net;loginTimeout=30;\")\\\r\n",
+					".option(\"dbTable\", \"datetester_view\")\\\r\n",
+					".load()\r\n",
+					"\r\n",
+					"print(df.first())"
+				],
+				"execution_count": 11
+			}
+		]
+	}
+}

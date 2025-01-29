@@ -1,0 +1,16 @@
+{
+	"name": "OtherSynapseWorkspace",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDW",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=synapsepartynovnet.sql.azuresynapse.net;initial catalog=novnetpartypool;user id=sqladminuser",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIlNZTkFQU0VAODZDRTAyRkQtMjc4OS00RTY2LUE2REMtREZBOEQxNTZFOTdGXzYzNTg5ZjcwLWJlMTEtNDhmOS04NjAyLWE5ZDMwZWNjMTY4NCINCn0="
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

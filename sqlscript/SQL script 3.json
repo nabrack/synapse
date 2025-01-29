@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 3",
+	"properties": {
+		"content": {
+			"query": "SELECT *\nFROM OPENROWSET(\nBULK 'https://synapsepartyfs.dfs.core.windows.net/synapsepartyfs/long_cols/file2.done',\nFORMAT = 'CSV', PARSER_VERSION = '1.0',\n--ROWTERMINATOR='\\n'\nFIELDTERMINATOR='0X16'\n) WITH (\n [esme_id ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 1,\n [trans_id ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 2,\n [session_id ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 3,\n [service_id ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 4,\n [app ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 5,\n [datetime ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 6,\n [shortcode ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 7,\n [msisdn ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 8,\n [dcs ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 9, \n [msg ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 10,\n [state ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 11,\n [request ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 12,\n [response ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 13,\n [error_type ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 14,\n [error_code ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 15,\n [time_taken ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 16,\n [sucess ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 17,\n [retry_count ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 18,\n [test]  VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 19,\n [bigfield] VARCHAR (MAX) collate Latin1_General_100_CI_AI_SC_UTF8 20\n) AS rows",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

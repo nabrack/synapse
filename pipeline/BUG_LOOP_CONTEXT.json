@@ -1,0 +1,116 @@
+{
+	"name": "BUG_LOOP_CONTEXT",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.inputArray",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "SetInsideForeach",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "foreachOutput",
+								"value": {
+									"value": "@item()",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "If Condition1",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "SetInsideForeach",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@equals(item(),'A')",
+									"type": "Expression"
+								},
+								"ifFalseActivities": [
+									{
+										"name": "SetInsideIfConditionFalse",
+										"type": "SetVariable",
+										"dependsOn": [],
+										"policy": {
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "ifOutput",
+											"value": {
+												"value": "@variables('foreachOutput')",
+												"type": "Expression"
+											}
+										}
+									}
+								],
+								"ifTrueActivities": [
+									{
+										"name": "SetInsideIfConditionTrue",
+										"type": "SetVariable",
+										"dependsOn": [],
+										"policy": {
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "ifOutput",
+											"value": {
+												"value": "@variables('foreachOutput')",
+												"type": "Expression"
+											}
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"inputArray": {
+				"type": "array",
+				"defaultValue": [
+					"A",
+					"B",
+					"C"
+				]
+			}
+		},
+		"variables": {
+			"foreachOutput": {
+				"type": "String"
+			},
+			"ifOutput": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-01-28T21:08:22Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

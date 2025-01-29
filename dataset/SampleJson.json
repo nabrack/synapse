@@ -1,0 +1,210 @@
+{
+	"name": "SampleJson",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "synapseparty-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tempparam": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "sample_json.txt",
+				"fileSystem": "synapsepartyfs"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"message": {
+					"type": "object",
+					"properties": {
+						"status": {
+							"type": "string"
+						},
+						"description": {
+							"type": "string"
+						},
+						"debug_message": {
+							"type": "string"
+						}
+					}
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"from_timestamp_hour_no": {
+								"type": "integer"
+							},
+							"from_timestamp": {
+								"type": "string"
+							},
+							"to_timestamp": {
+								"type": "string"
+							},
+							"es_index": {
+								"type": "string"
+							},
+							"number_of_tickets": {
+								"type": "integer"
+							},
+							"event_data": {
+								"type": "object",
+								"properties": {
+									"9D160168300": {
+										"type": "null"
+									},
+									"9D310138100": {
+										"type": "null"
+									},
+									"01030144200": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"body": {
+													"type": "object",
+													"properties": {
+														"comment": {
+															"type": "string"
+														},
+														"ticketEventType": {
+															"type": "string"
+														},
+														"activityDate": {
+															"type": "string"
+														},
+														"bridgeSystemTicketId": {
+															"type": "string"
+														},
+														"typeOfService": {
+															"type": "string"
+														},
+														"currentTier2WkCtr": {
+															"type": "string"
+														},
+														"custTicketNumber": {
+															"type": "string"
+														},
+														"eventId": {
+															"type": "integer"
+														},
+														"eventTime": {
+															"type": "integer"
+														},
+														"workCenterId": {
+															"type": "string"
+														},
+														"currentTier1WkCtr": {
+															"type": "string"
+														},
+														"cgwSbsnValue": {
+															"type": "string"
+														},
+														"custId": {
+															"type": "string"
+														},
+														"loginId": {
+															"type": "string"
+														},
+														"mcn": {
+															"type": "string"
+														},
+														"troubleTicketId": {
+															"type": "string"
+														},
+														"serviceIdType": {
+															"type": "string"
+														},
+														"activityTypeCode": {
+															"type": "string"
+														},
+														"custIdValue": {
+															"type": "string"
+														},
+														"domainName": {
+															"type": "string"
+														},
+														"besban": {
+															"type": "string"
+														},
+														"custIdType": {
+															"type": "string"
+														},
+														"autoIndicator": {
+															"type": "string"
+														},
+														"serviceCode": {
+															"type": "string"
+														},
+														"ticketSource": {
+															"type": "string"
+														}
+													}
+												},
+												"blinkMsgId": {
+													"type": "string"
+												},
+												"header": {
+													"type": "object",
+													"properties": {
+														"timestamp": {
+															"type": "string"
+														},
+														"entityId": {
+															"type": "string"
+														},
+														"eventSource": {
+															"type": "string"
+														},
+														"name": {
+															"type": "string"
+														},
+														"requestId": {
+															"type": "string"
+														}
+													}
+												},
+												"cbusHeader": {
+													"type": "object",
+													"properties": {
+														"queueOffset": {
+															"type": "integer"
+														}
+													}
+												},
+												"tnzpdHeader": {
+													"type": "object",
+													"properties": {
+														"receivedAt": {
+															"type": "string"
+														},
+														"ticketId": {
+															"type": "string"
+														}
+													}
+												},
+												"sourceIP": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

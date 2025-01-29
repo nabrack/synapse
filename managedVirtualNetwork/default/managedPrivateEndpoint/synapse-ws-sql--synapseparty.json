@@ -1,0 +1,10 @@
+{
+	"name": "synapse-ws-sql--synapseparty",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Synapse/workspaces/synapseparty",
+		"groupId": "sql",
+		"fqdns": [
+			"synapseparty.59666690-c44a-451b-bb72-662f25a5538f.sql.azuresynapse.net"
+		]
+	}
+}

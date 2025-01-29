@@ -1,0 +1,10 @@
+{
+	"name": "RuisCosmosDbAnalytical",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/7b1f20ef-1976-4cda-8578-8ed55045bd7a/resourceGroups/rg-cunha/providers/Microsoft.DocumentDB/databaseAccounts/cunha-cosmos-mongodb",
+		"groupId": "Analytical",
+		"fqdns": [
+			"1718409691704451436.blob.core.windows.net"
+		]
+	}
+}

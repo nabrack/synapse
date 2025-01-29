@@ -1,0 +1,97 @@
+{
+	"name": "ctas_from_lake_table",
+	"properties": {
+		"Name": "ctas_from_lake_table",
+		"EntityType": "TABLE",
+		"TableType": "EXTERNAL",
+		"Namespace": {
+			"SchemaName": null,
+			"DatabaseName": "Database1",
+			"DatabaseId": null
+		},
+		"StorageDescriptor": {
+			"Distribution": null,
+			"Columns": [
+				{
+					"Name": "firstname",
+					"Description": null,
+					"OriginDataTypeName": {
+						"TypeName": "string",
+						"IsComplexType": false,
+						"IsNullable": true,
+						"Length": 0,
+						"Precision": 0,
+						"Scale": 0,
+						"Properties": {
+							"HIVE_TYPE_STRING": "string"
+						}
+					}
+				},
+				{
+					"Name": "lastname",
+					"Description": null,
+					"OriginDataTypeName": {
+						"TypeName": "string",
+						"IsComplexType": false,
+						"IsNullable": true,
+						"Length": 0,
+						"Precision": 0,
+						"Scale": 0,
+						"Properties": {
+							"HIVE_TYPE_STRING": "string"
+						}
+					}
+				}
+			],
+			"ColumnSetEntityName": "1cfb79cf-ae91-409e-84c8-425b388f5899",
+			"Format": {
+				"InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
+				"OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
+				"FormatType": "textfile",
+				"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+				"Properties": {
+					"serialization.format": "1"
+				}
+			},
+			"Source": {
+				"Location": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/Database1/ctas_from_lake_table",
+				"Properties": {
+					"LocationSetToDatabaseDefault": false
+				}
+			},
+			"Properties": {
+				"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
+			},
+			"Compressed": false,
+			"SerDeInfo": null,
+			"IsStoredAsSubdirectories": false
+		},
+		"Owner": "trusted-service-user",
+		"CreateTime": 1677760342,
+		"LastAccessTime": 0,
+		"Retention": 0,
+		"Temporary": false,
+		"IsRewriteEnabled": false,
+		"ViewOriginalText": null,
+		"ViewExpandedText": null,
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"OriginObjectId": null,
+		"IsSharedEntity": false,
+		"PublishStatus": "PUBLISHED",
+		"Properties": {
+			"Transient_lastDdlTime": "1677760344",
+			"NumFiles": "1",
+			"TotalSize": "13",
+			"spark.sql.sources.schema.part.0": "{\"type\":\"struct\",\"fields\":[{\"name\":\"firstname\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"lastname\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+			"spark.sql.sources.schema.numParts": "1",
+			"spark.sql.create.version": "3.1.3.5.0-83093024",
+			"PrimaryKeys": "",
+			"spark.sql.sources.provider": "textfile"
+		},
+		"ObjectVersion": 2,
+		"ObjectId": "a2a7a43e-eb57-4479-b310-36370dfa7abd"
+	},
+	"type": "TABLE"
+}

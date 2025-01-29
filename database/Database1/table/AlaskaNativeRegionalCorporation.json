@@ -1,0 +1,137 @@
+{
+	"name": "AlaskaNativeRegionalCorporation",
+	"properties": {
+		"Name": "AlaskaNativeRegionalCorporation",
+		"EntityType": "TABLE",
+		"TableType": "EXTERNAL",
+		"Namespace": {
+			"SchemaName": null,
+			"DatabaseName": "Database1",
+			"DatabaseId": null
+		},
+		"StorageDescriptor": {
+			"Distribution": null,
+			"Columns": [
+				{
+					"Name": "AnrcId",
+					"Description": "The U.S. Census Bureau offers representatives of the 12 nonprofit ANRCs the opportunity to review and update the ANRC boundaries. The U.S. Census Bureau first provided data for ANRCs for the 1990 census.",
+					"OriginDataTypeName": {
+						"TypeName": "integer",
+						"IsComplexType": false,
+						"IsNullable": false,
+						"Length": 0,
+						"Precision": 0,
+						"Scale": 0,
+						"Properties": {
+							"HIVE_TYPE_STRING": "integer"
+						}
+					},
+					"BaseAttributeReference": {
+						"Entity": "AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation",
+						"Name": "AnrcId"
+					}
+				},
+				{
+					"Name": "AnrcName",
+					"Description": "The name of the Alaska Native Regional Corporation.",
+					"OriginDataTypeName": {
+						"TypeName": "string",
+						"IsComplexType": false,
+						"IsNullable": true,
+						"Length": 128,
+						"Precision": 0,
+						"Scale": 0,
+						"Properties": {
+							"HIVE_TYPE_STRING": "string"
+						}
+					},
+					"BaseAttributeReference": {
+						"Entity": "AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation",
+						"Name": "AnrcName"
+					}
+				},
+				{
+					"Name": "NationId",
+					"Description": "The unique identifier of the Nation, which in this case is simply the US and anchors the geographic hierarchy.",
+					"OriginDataTypeName": {
+						"TypeName": "integer",
+						"IsComplexType": false,
+						"IsNullable": true,
+						"Length": 0,
+						"Precision": 0,
+						"Scale": 0,
+						"Properties": {
+							"HIVE_TYPE_STRING": "integer"
+						}
+					},
+					"BaseAttributeReference": {
+						"Entity": "AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation",
+						"Name": "NationId"
+					}
+				}
+			],
+			"ColumnSetEntityName": "7053a879-f17f-4323-b96a-a1c4e95939f0",
+			"Format": {
+				"InputFormat": "org.apache.hadoop.mapred.SequenceFileInputFormat",
+				"OutputFormat": "org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat",
+				"FormatType": "csv",
+				"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+				"Properties": {
+					"path": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/Database1/AlaskaNativeRegionalCorporation",
+					"delimiter": ",",
+					"firstRowAsHeader": "false",
+					"multiLine": "false",
+					"serialization.format": "1",
+					"escape": "\\",
+					"quote": "\"",
+					"FormatTypeSetToDatabaseDefault": true,
+					"header": "false"
+				}
+			},
+			"Source": {
+				"Provider": "ADLS",
+				"Location": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/Database1/AlaskaNativeRegionalCorporation",
+				"Properties": {
+					"LinkedServiceName": "synapseparty-WorkspaceDefaultStorage",
+					"LocationSetToDatabaseDefault": true
+				}
+			},
+			"Properties": {
+				"textinputformat.record.delimiter": ",",
+				"compression": "{\"type\":\"None\",\"level\":\"optimal\"}",
+				"derivedModelAttributeInfo": "{\"attributeReferences\":{\"AnrcId\":{\"entity\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\",\"name\":\"AnrcId\"},\"AnrcName\":{\"entity\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\",\"name\":\"AnrcName\"},\"NationId\":{\"entity\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\",\"name\":\"NationId\"}}}"
+			},
+			"Compressed": false,
+			"SerDeInfo": null,
+			"IsStoredAsSubdirectories": false
+		},
+		"Owner": null,
+		"CreateTime": 0,
+		"LastAccessTime": 0,
+		"Retention": 0,
+		"Temporary": false,
+		"IsRewriteEnabled": false,
+		"ViewOriginalText": null,
+		"ViewExpandedText": null,
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"OriginObjectId": null,
+		"IsSharedEntity": false,
+		"PublishStatus": "PUBLISHED",
+		"Properties": {
+			"DerivedModelEntityInfo": "{\"entityDirectives\":{\"baseEntityReference\":{\"name\":\"AlaskaNativeRegionalCorporation\",\"path\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\"},\"description\":\"Alaska Native Regional Corporations (ANRCs) are corporate entities established to conduct both business and nonprofit affairs of Alaska Natives pursuant to the Alaska Native Claims Settlement Act of 1972 (Public Law 92-203). Twelve ANRCs are geographic entities that cover most of the state of Alaska (the Annette Island Reserve-an American Indian reservation-is excluded from any ANRC). (A thirteenth ANRC represents Alaska Natives who do not live in Alaska and do not identify with any of the 12 corporations; the U.S. Census Bureau does not provide data for this ANRC because it has no geographic extent.) The boundaries of ANRCs have been legally established.\\n\\nThe U.S. Census Bureau offers representatives of the 12 nonprofit ANRCs the opportunity to review and update the ANRC boundaries. The U.S. Census Bureau first provided data for ANRCs for the 1990 census.\\n \\nEach ANRC is assigned a five-digit Federal Information Processing Standards (FIPS) code, which is assigned in alphabetical order by ANRC name.\",\"primaryKey\":[\"AnrcId\"],\"projectionInfo\":{\"attributes\":[{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\",\"name\":\"AnrcId\"},\"dataType\":\"integer\",\"description\":\"The U.S. Census Bureau offers representatives of the 12 nonprofit ANRCs the opportunity to review and update the ANRC boundaries. The U.S. Census Bureau first provided data for ANRCs for the 1990 census.\",\"isNullable\":false,\"name\":\"AnrcId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\",\"name\":\"AnrcName\"},\"dataType\":\"string\",\"dataTypeLength\":128,\"description\":\"The name of the Alaska Native Regional Corporation.\",\"isNullable\":true,\"name\":\"AnrcName\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\",\"name\":\"NationId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of the Nation, which in this case is simply the US and anchors the geographic hierarchy.\",\"isNullable\":true,\"name\":\"NationId\"}]}}}",
+			"Description": "Alaska Native Regional Corporations (ANRCs) are corporate entities established to conduct both business and nonprofit affairs of Alaska Natives pursuant to the Alaska Native Claims Settlement Act of 1972 (Public Law 92-203). Twelve ANRCs are geographic entities that cover most of the state of Alaska (the Annette Island Reserve-an American Indian reservation-is excluded from any ANRC). (A thirteenth ANRC represents Alaska Natives who do not live in Alaska and do not identify with any of the 12 corporations; the U.S. Census Bureau does not provide data for this ANRC because it has no geographic extent.) The boundaries of ANRCs have been legally established.\n\nThe U.S. Census Bureau offers representatives of the 12 nonprofit ANRCs the opportunity to review and update the ANRC boundaries. The U.S. Census Bureau first provided data for ANRCs for the 1990 census.\n \nEach ANRC is assigned a five-digit Federal Information Processing Standards (FIPS) code, which is assigned in alphabetical order by ANRC name.",
+			"DisplayFolderInfo": "{\"name\":\"Geography\",\"colorCode\":\"#630454\"}",
+			"PrimaryKeys": "AnrcId",
+			"spark.sql.sources.provider": "csv",
+			"x-ms-usageinfo": "AzureSynapseDatabaseTemplate",
+			"spark.sql.sources.schema.numParts": "1",
+			"spark.sql.sources.schema.part.0": "{\"type\":\"struct\",\"fields\":[{\"name\":\"AnrcId\",\"type\":\"integer\",\"nullable\":false,\"metadata\":{}},{\"name\":\"AnrcName\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"NationId\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}"
+		},
+		"ObjectVersion": 1,
+		"ObjectId": "2493b59a-82a3-44ad-bc73-2a1b3d96a765",
+		"Description": "Alaska Native Regional Corporations (ANRCs) are corporate entities established to conduct both business and nonprofit affairs of Alaska Natives pursuant to the Alaska Native Claims Settlement Act of 1972 (Public Law 92-203). Twelve ANRCs are geographic entities that cover most of the state of Alaska (the Annette Island Reserve-an American Indian reservation-is excluded from any ANRC). (A thirteenth ANRC represents Alaska Natives who do not live in Alaska and do not identify with any of the 12 corporations; the U.S. Census Bureau does not provide data for this ANRC because it has no geographic extent.) The boundaries of ANRCs have been legally established.\n\nThe U.S. Census Bureau offers representatives of the 12 nonprofit ANRCs the opportunity to review and update the ANRC boundaries. The U.S. Census Bureau first provided data for ANRCs for the 1990 census.\n \nEach ANRC is assigned a five-digit Federal Information Processing Standards (FIPS) code, which is assigned in alphabetical order by ANRC name."
+	},
+	"type": "TABLE"
+}
