@@ -62,6 +62,10 @@
 			"metadata": "Secure string for 'connectionString' of 'synapseparty-WorkspaceDefaultSqlServer'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapseparty.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
+		"LocalDedicatedSqlUser_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LocalDedicatedSqlUser'"
+		},
 		"AzureDataExplorer1_properties_typeProperties_database": {
 			"type": "string",
 			"defaultValue": "proxy"
@@ -109,6 +113,18 @@
 		"synapseparty-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://synapsepartyfs.dfs.core.windows.net"
+		},
+		"LocalDedicatedSqlUser_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "synapseparty.sql.azuresynapse.net"
+		},
+		"LocalDedicatedSqlUser_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dedicatedparty"
+		},
+		"LocalDedicatedSqlUser_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sqladminuser"
 		}
 	},
 	"variables": {
@@ -1065,11 +1081,8 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "synapseparty-WorkspaceDefaultSqlServer",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"DBName": "dedicatedparty"
-					}
+					"referenceName": "LocalDedicatedSqlUser",
+					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
@@ -1081,11 +1094,12 @@
 					}
 				],
 				"typeProperties": {
-					"tableName": "dbo.datetester"
+					"schema": "dbo",
+					"table": "datetester"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/linkedServices/synapseparty-WorkspaceDefaultSqlServer')]"
+				"[concat(variables('workspaceId'), '/linkedServices/LocalDedicatedSqlUser')]"
 			]
 		},
 		{
@@ -3147,6 +3161,34 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/LocalDedicatedSqlUser')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"server": "[parameters('LocalDedicatedSqlUser_properties_typeProperties_server')]",
+					"database": "[parameters('LocalDedicatedSqlUser_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('LocalDedicatedSqlUser_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('LocalDedicatedSqlUser_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
 			]
 		}
 	]

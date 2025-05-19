@@ -44,6 +44,9 @@
 		"synapseparty-WorkspaceDefaultSqlServer_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapseparty.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
+		"LocalDedicatedSqlUser_password": {
+			"value": ""
+		},
 		"AzureDataExplorer1_properties_typeProperties_database": {
 			"value": "proxy"
 		},
@@ -79,6 +82,15 @@
 		},
 		"synapseparty-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"value": "https://synapsepartyfs.dfs.core.windows.net"
+		},
+		"LocalDedicatedSqlUser_properties_typeProperties_server": {
+			"value": "synapseparty.sql.azuresynapse.net"
+		},
+		"LocalDedicatedSqlUser_properties_typeProperties_database": {
+			"value": "dedicatedparty"
+		},
+		"LocalDedicatedSqlUser_properties_typeProperties_userName": {
+			"value": "sqladminuser"
 		}
 	}
 }
