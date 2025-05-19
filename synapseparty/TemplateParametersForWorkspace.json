@@ -1,0 +1,84 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "synapseparty"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase2_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=partysqldb.database.windows.net;Initial Catalog=partydb"
+		},
+		"AzureSynapseAnalytics1_connectionString": {
+			"value": ""
+		},
+		"AzureSynapseAnalyticsLongTimeout_connectionString": {
+			"value": ""
+		},
+		"CosmosDbMongoDbApi_connectionString": {
+			"value": ""
+		},
+		"CosmosDbMongoDbApi_account": {
+			"value": ""
+		},
+		"Dataverse1_servicePrincipalCredential": {
+			"value": ""
+		},
+		"LimitedAccessStorage_servicePrincipalCredential": {
+			"value": ""
+		},
+		"OtherSynapseWorkspace_connectionString": {
+			"value": ""
+		},
+		"RuisCosmosDb_connectionString": {
+			"value": ""
+		},
+		"RuisCosmosDb_account": {
+			"value": ""
+		},
+		"SqlOd_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=synapseparty-ondemand.sql.azuresynapse.net;Initial Catalog=externals"
+		},
+		"synapseparty-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapseparty.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"AzureDataExplorer1_properties_typeProperties_database": {
+			"value": "proxy"
+		},
+		"AzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://partyadls.dfs.core.windows.net"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://synapsepartyfs.dfs.core.windows.net"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://mlparty2276798987.vault.azure.net/"
+		},
+		"CosmosDbMongoDbApi_properties_typeProperties_database": {
+			"value": "primary"
+		},
+		"Dataverse1_properties_typeProperties_servicePrincipalId": {
+			"value": "asd"
+		},
+		"LimitedAccessStorage_properties_typeProperties_url": {
+			"value": "https://synapsepartyfs.dfs.core.windows.net"
+		},
+		"LimitedAccessStorage_properties_typeProperties_tenant": {
+			"value": "965ec97b-4fd0-4970-b2f2-49603e564b77"
+		},
+		"LimitedAccessStorage_properties_typeProperties_servicePrincipalId": {
+			"value": "1ff1b361-da38-46b4-b18e-7114877d6deb"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"value": "https://jsonplaceholder.typicode.com/"
+		},
+		"RuisCosmosDb_properties_typeProperties_database": {
+			"value": "cunha_mongo_db"
+		},
+		"synapseparty-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://synapsepartyfs.dfs.core.windows.net"
+		}
+	}
+}

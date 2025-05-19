@@ -1,0 +1,3153 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"type": "string",
+			"metadata": "Workspace name",
+			"defaultValue": "synapseparty"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
+		"AzureSqlDatabase2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase2'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=partysqldb.database.windows.net;Initial Catalog=partydb"
+		},
+		"AzureSynapseAnalytics1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalytics1'"
+		},
+		"AzureSynapseAnalyticsLongTimeout_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalyticsLongTimeout'"
+		},
+		"CosmosDbMongoDbApi_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'CosmosDbMongoDbApi'"
+		},
+		"CosmosDbMongoDbApi_account": {
+			"type": "secureString",
+			"metadata": "Secure string for 'account' of 'CosmosDbMongoDbApi'"
+		},
+		"Dataverse1_servicePrincipalCredential": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalCredential' of 'Dataverse1'"
+		},
+		"LimitedAccessStorage_servicePrincipalCredential": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalCredential' of 'LimitedAccessStorage'"
+		},
+		"OtherSynapseWorkspace_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OtherSynapseWorkspace'"
+		},
+		"RuisCosmosDb_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'RuisCosmosDb'"
+		},
+		"RuisCosmosDb_account": {
+			"type": "secureString",
+			"metadata": "Secure string for 'account' of 'RuisCosmosDb'"
+		},
+		"SqlOd_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlOd'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=synapseparty-ondemand.sql.azuresynapse.net;Initial Catalog=externals"
+		},
+		"synapseparty-WorkspaceDefaultSqlServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'synapseparty-WorkspaceDefaultSqlServer'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapseparty.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"AzureDataExplorer1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "proxy"
+		},
+		"AzureDataLakeStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://partyadls.dfs.core.windows.net"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://synapsepartyfs.dfs.core.windows.net"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://mlparty2276798987.vault.azure.net/"
+		},
+		"CosmosDbMongoDbApi_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "primary"
+		},
+		"Dataverse1_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "asd"
+		},
+		"LimitedAccessStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://synapsepartyfs.dfs.core.windows.net"
+		},
+		"LimitedAccessStorage_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "965ec97b-4fd0-4970-b2f2-49603e564b77"
+		},
+		"LimitedAccessStorage_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "1ff1b361-da38-46b4-b18e-7114877d6deb"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://jsonplaceholder.typicode.com/"
+		},
+		"RuisCosmosDb_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "cunha_mongo_db"
+		},
+		"synapseparty-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://synapsepartyfs.dfs.core.windows.net"
+		}
+	},
+	"variables": {
+		"workspaceId": "[concat('Microsoft.Synapse/workspaces/', parameters('workspaceName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('workspaceName'), '/BUG_LOOP_CONTEXT')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.inputArray",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "SetInsideForeach",
+									"type": "SetVariable",
+									"dependsOn": [],
+									"policy": {
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "foreachOutput",
+										"value": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "If Condition1",
+									"type": "IfCondition",
+									"dependsOn": [
+										{
+											"activity": "SetInsideForeach",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"expression": {
+											"value": "@equals(item(),'A')",
+											"type": "Expression"
+										},
+										"ifFalseActivities": [
+											{
+												"name": "SetInsideIfConditionFalse",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"policy": {
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "ifOutput",
+													"value": {
+														"value": "@variables('foreachOutput')",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"ifTrueActivities": [
+											{
+												"name": "SetInsideIfConditionTrue",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"policy": {
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "ifOutput",
+													"value": {
+														"value": "@variables('foreachOutput')",
+														"type": "Expression"
+													}
+												}
+											}
+										]
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"inputArray": {
+						"type": "array",
+						"defaultValue": [
+							"A",
+							"B",
+							"C"
+						]
+					}
+				},
+				"variables": {
+					"foreachOutput": {
+						"type": "String"
+					},
+					"ifOutput": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-01-28T21:08:22Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Lookup No Op')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "pool_dataset",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-08-04T14:48:09Z"
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/pool_dataset')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/copy_from_pool')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "pool_dataset",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SampleCsv",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-07-07T19:20:18Z"
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/pool_dataset')]",
+				"[concat(variables('workspaceId'), '/datasets/SampleCsv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/failure')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "Fail1",
+						"type": "Fail",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"message": "Failure",
+							"errorCode": "20"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-15T17:15:48Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/file_to_pool_copy')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"allowPolyBase": true,
+								"polyBaseSettings": {
+									"rejectValue": 0,
+									"rejectType": "value",
+									"useTypeDefault": true
+								}
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "synapseparty-WorkspaceDefaultStorage",
+									"type": "LinkedServiceReference"
+								}
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "DateTimes",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "datetest",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "source_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"tempparam": "temp"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "pool_dataset",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-05-10T13:39:12Z"
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/source_parquet')]",
+				"[concat(variables('workspaceId'), '/datasets/pool_dataset')]",
+				"[concat(variables('workspaceId'), '/linkedServices/synapseparty-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/json_to_csv_copy')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "JSON Copy",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings",
+									"copyBehavior": "PreserveHierarchy"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['message']['status']"
+										},
+										"sink": {
+											"path": "$['status']"
+										}
+									},
+									{
+										"source": {
+											"path": "['event_data']"
+										},
+										"sink": {
+											"path": "$['data']"
+										}
+									}
+								],
+								"collectionReference": "$['data']"
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SampleJson",
+								"type": "DatasetReference",
+								"parameters": {
+									"tempparam": "temp"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SampleJsonOutput",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-05-10T13:37:54Z"
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/SampleJson')]",
+				"[concat(variables('workspaceId'), '/datasets/SampleJsonOutput')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/permissions_in_pipeline')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "Notebook1",
+						"type": "SynapseNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebook": {
+								"referenceName": "table creation",
+								"type": "NotebookReference"
+							},
+							"snapshot": true,
+							"sparkPool": {
+								"referenceName": "partyspark",
+								"type": "BigDataPoolReference"
+							},
+							"conf": {
+								"spark.dynamicAllocation.enabled": null,
+								"spark.dynamicAllocation.minExecutors": null,
+								"spark.dynamicAllocation.maxExecutors": null
+							},
+							"numExecutors": null
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-08-01T20:34:43Z"
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/notebooks/table creation')]",
+				"[concat(variables('workspaceId'), '/bigDataPools/partyspark')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AzureDataExplorerTable1')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataExplorer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataExplorerTable",
+				"schema": [
+					{
+						"name": "column1",
+						"type": "string"
+					},
+					{
+						"name": "column2",
+						"type": "long"
+					}
+				],
+				"typeProperties": {
+					"table": "TableTest"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/AzureDataExplorer1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "new_table"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/RestResource1')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RestService1",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"int_param": 1
+					}
+				},
+				"parameters": {
+					"int_param": {
+						"type": "int",
+						"defaultValue": 1
+					}
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "https://jsonplaceholder.typicode.com/comments?postId=@dataset().int_param"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/RestService1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SampleCsv')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "synapseparty-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "synapsepartyfs"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/synapseparty-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SampleJson')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "synapseparty-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tempparam": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "sample_json.txt",
+						"fileSystem": "synapsepartyfs"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"message": {
+							"type": "object",
+							"properties": {
+								"status": {
+									"type": "string"
+								},
+								"description": {
+									"type": "string"
+								},
+								"debug_message": {
+									"type": "string"
+								}
+							}
+						},
+						"data": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"from_timestamp_hour_no": {
+										"type": "integer"
+									},
+									"from_timestamp": {
+										"type": "string"
+									},
+									"to_timestamp": {
+										"type": "string"
+									},
+									"es_index": {
+										"type": "string"
+									},
+									"number_of_tickets": {
+										"type": "integer"
+									},
+									"event_data": {
+										"type": "object",
+										"properties": {
+											"9D160168300": {
+												"type": "null"
+											},
+											"9D310138100": {
+												"type": "null"
+											},
+											"01030144200": {
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"body": {
+															"type": "object",
+															"properties": {
+																"comment": {
+																	"type": "string"
+																},
+																"ticketEventType": {
+																	"type": "string"
+																},
+																"activityDate": {
+																	"type": "string"
+																},
+																"bridgeSystemTicketId": {
+																	"type": "string"
+																},
+																"typeOfService": {
+																	"type": "string"
+																},
+																"currentTier2WkCtr": {
+																	"type": "string"
+																},
+																"custTicketNumber": {
+																	"type": "string"
+																},
+																"eventId": {
+																	"type": "integer"
+																},
+																"eventTime": {
+																	"type": "integer"
+																},
+																"workCenterId": {
+																	"type": "string"
+																},
+																"currentTier1WkCtr": {
+																	"type": "string"
+																},
+																"cgwSbsnValue": {
+																	"type": "string"
+																},
+																"custId": {
+																	"type": "string"
+																},
+																"loginId": {
+																	"type": "string"
+																},
+																"mcn": {
+																	"type": "string"
+																},
+																"troubleTicketId": {
+																	"type": "string"
+																},
+																"serviceIdType": {
+																	"type": "string"
+																},
+																"activityTypeCode": {
+																	"type": "string"
+																},
+																"custIdValue": {
+																	"type": "string"
+																},
+																"domainName": {
+																	"type": "string"
+																},
+																"besban": {
+																	"type": "string"
+																},
+																"custIdType": {
+																	"type": "string"
+																},
+																"autoIndicator": {
+																	"type": "string"
+																},
+																"serviceCode": {
+																	"type": "string"
+																},
+																"ticketSource": {
+																	"type": "string"
+																}
+															}
+														},
+														"blinkMsgId": {
+															"type": "string"
+														},
+														"header": {
+															"type": "object",
+															"properties": {
+																"timestamp": {
+																	"type": "string"
+																},
+																"entityId": {
+																	"type": "string"
+																},
+																"eventSource": {
+																	"type": "string"
+																},
+																"name": {
+																	"type": "string"
+																},
+																"requestId": {
+																	"type": "string"
+																}
+															}
+														},
+														"cbusHeader": {
+															"type": "object",
+															"properties": {
+																"queueOffset": {
+																	"type": "integer"
+																}
+															}
+														},
+														"tnzpdHeader": {
+															"type": "object",
+															"properties": {
+																"receivedAt": {
+																	"type": "string"
+																},
+																"ticketId": {
+																	"type": "string"
+																}
+															}
+														},
+														"sourceIP": {
+															"type": "string"
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/synapseparty-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SampleJsonOutput')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "synapseparty-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "sample_json_output.json",
+						"fileSystem": "synapsepartyfs"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/synapseparty-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SqlPoolTable1')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "SqlPoolTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "temp_table"
+				},
+				"sqlPool": {
+					"referenceName": "dedicatedparty",
+					"type": "SqlPoolReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/sqlPools/dedicatedparty')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/XmlBodyTest')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "synapseparty-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Xml",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "response.xml",
+						"fileSystem": "synapsepartyfs"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/synapseparty-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/csv_dataset')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "file1.csv",
+						"folderPath": "external",
+						"fileSystem": "partyadlsfs"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/parquet_source')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "file1.parquet",
+						"folderPath": "external",
+						"fileSystem": "partyadlsfs"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "addntl_detls",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/pool_dataset')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "synapseparty-WorkspaceDefaultSqlServer",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DBName": "dedicatedparty"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "datetest",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"tableName": "dbo.datetester"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/synapseparty-WorkspaceDefaultSqlServer')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/pool_dataset_new')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "synapseparty-WorkspaceDefaultSqlServer",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"DBName": "dedicatedparty"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "datetest",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"tableName": "dbo.datetester"
+				},
+				"table": null,
+				"tableName": "dbo.datetester",
+				"additionalProperties": null,
+				"schemaTypePropertiesSchema": null
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/synapseparty-WorkspaceDefaultSqlServer')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/sink_parquet')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "synapseparty-WorkspaceDefaultStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "output",
+						"fileSystem": "synapsepartyfs"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/synapseparty-WorkspaceDefaultStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/source_parquet')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tempparam": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "test.parquet",
+						"fileSystem": "synapsepartyfs"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "Id",
+						"type": "INT32"
+					},
+					{
+						"name": "Dates",
+						"type": "DATE"
+					},
+					{
+						"name": "DateTimes",
+						"type": "INT96"
+					},
+					{
+						"name": "DateTime2s",
+						"type": "INT96"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/sql_db_table')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "new_table"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AzureDataExplorer1')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDataExplorer",
+				"typeProperties": {
+					"endpoint": "https://laproxy.eastus.kusto.windows.net",
+					"database": "[parameters('AzureDataExplorer1_properties_typeProperties_database')]",
+					"credential": {
+						"referenceName": "TestSpCred",
+						"type": "CredentialReference"
+					}
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
+				"[concat(variables('workspaceId'), '/credentials/TestSpCred')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AzureDataLakeStorage')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AzureDataLakeStorage1')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]",
+					"credential": {
+						"referenceName": "TestSpCred",
+						"type": "CredentialReference"
+					}
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
+				"[concat(variables('workspaceId'), '/credentials/TestSpCred')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AzureKeyVault1')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AzureSqlDatabase2')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase2_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AzureSynapseAnalytics1')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSynapseAnalytics1_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AzureSynapseAnalyticsLongTimeout')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSynapseAnalyticsLongTimeout_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/CosmosDbMongoDbApi')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "CosmosDbMongoDbApi",
+				"typeProperties": {
+					"connectionString": "[parameters('CosmosDbMongoDbApi_connectionString')]",
+					"account": {
+						"type": "SecureString",
+						"value": "[parameters('CosmosDbMongoDbApi_account')]"
+					},
+					"database": "[parameters('CosmosDbMongoDbApi_properties_typeProperties_database')]",
+					"isServerVersionAbove32": true
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Dataverse1')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "CommonDataServiceForApps",
+				"typeProperties": {
+					"deploymentType": "Online",
+					"serviceUri": "https://myspot",
+					"authenticationType": "AADServicePrincipal",
+					"servicePrincipalId": "[parameters('Dataverse1_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalCredential": {
+						"type": "SecureString",
+						"value": "[parameters('Dataverse1_servicePrincipalCredential')]"
+					},
+					"servicePrincipalCredentialType": "ServicePrincipalKey"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/LimitedAccessStorage')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('LimitedAccessStorage_properties_typeProperties_url')]",
+					"tenant": "[parameters('LimitedAccessStorage_properties_typeProperties_tenant')]",
+					"servicePrincipalId": "[parameters('LimitedAccessStorage_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalCredentialType": "ServicePrincipalKey",
+					"servicePrincipalCredential": {
+						"type": "SecureString",
+						"value": "[parameters('LimitedAccessStorage_servicePrincipalCredential')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/OtherSynapseWorkspace')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('OtherSynapseWorkspace_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/RestService1')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"parameters": {
+					"int_param": {
+						"type": "int",
+						"defaultValue": 1
+					}
+				},
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('RestService1_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/RuisCosmosDb')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "CosmosDbMongoDbApi",
+				"typeProperties": {
+					"connectionString": "[parameters('RuisCosmosDb_connectionString')]",
+					"account": {
+						"type": "SecureString",
+						"value": "[parameters('RuisCosmosDb_account')]"
+					},
+					"database": "[parameters('RuisCosmosDb_properties_typeProperties_database')]",
+					"isServerVersionAbove32": true
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SqlOd')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('SqlOd_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/synapseparty-WorkspaceDefaultSqlServer')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"parameters": {
+					"DBName": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('synapseparty-WorkspaceDefaultSqlServer_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/synapseparty-WorkspaceDefaultStorage')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('synapseparty-WorkspaceDefaultStorage_properties_typeProperties_url')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/AutoResolveIntegrationRuntime')]",
+			"type": "Microsoft.Synapse/workspaces/integrationRuntimes",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 0,
+							"cleanup": true
+						},
+						"pipelineExternalComputeScaleProperties": {
+							"timeToLive": 60
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Dataflow1')]",
+			"type": "Microsoft.Synapse/workspaces/dataflows",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "source_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "sink_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "externalCall1"
+						}
+					],
+					"script": "source(output(\n\t\tId as integer,\n\t\tDates as date,\n\t\tDateTimes as timestamp,\n\t\tDateTime2s as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\tpartitionBy('key',\n\t\t0,\n\t\tId\n\t)) ~> source1\nsource1 call(allowSchemaDrift: true) ~> externalCall1\nexternalCall1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/source_parquet')]",
+				"[concat(variables('workspaceId'), '/datasets/sink_parquet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/write to cdm')]",
+			"type": "Microsoft.Synapse/workspaces/dataflows",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "source_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Id as integer,",
+						"          Dates as date,",
+						"          DateTimes as timestamp,",
+						"          DateTime2s as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> source1",
+						"source1 alterRow(upsertIf(true())) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     recreate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/source_parquet')]",
+				"[concat(variables('workspaceId'), '/datasets/AzureSqlTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/TestSpCred')]",
+			"type": "Microsoft.Synapse/workspaces/credentials",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "ServicePrincipal",
+				"typeProperties": {
+					"tenant": "965ec97b-4fd0-4970-b2f2-49603e564b77",
+					"servicePrincipalId": "97498a2d-8ebc-4c18-8073-8c2c893b81e1",
+					"servicePrincipalKey": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVault1",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "testspcred"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/AzureKeyVault1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/WorkspaceSystemIdentity')]",
+			"type": "Microsoft.Synapse/workspaces/credentials",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "ManagedIdentity",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/default')]",
+			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 2')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://synapsepartyfs.dfs.core.windows.net/synapsepartyfs/output/test.parquet',\n        FORMAT='PARQUET'\n    ) AS [result]\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "master",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 3')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT *\nFROM OPENROWSET(\nBULK 'https://synapsepartyfs.dfs.core.windows.net/synapsepartyfs/long_cols/file2.done',\nFORMAT = 'CSV', PARSER_VERSION = '1.0',\n--ROWTERMINATOR='\\n'\nFIELDTERMINATOR='0X16'\n) WITH (\n [esme_id ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 1,\n [trans_id ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 2,\n [session_id ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 3,\n [service_id ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 4,\n [app ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 5,\n [datetime ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 6,\n [shortcode ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 7,\n [msisdn ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 8,\n [dcs ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 9, \n [msg ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 10,\n [state ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 11,\n [request ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 12,\n [response ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 13,\n [error_type ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 14,\n [error_code ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 15,\n [time_taken ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 16,\n [sucess ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 17,\n [retry_count ] VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 18,\n [test]  VARCHAR (8000) collate Latin1_General_100_CI_AI_SC_UTF8 19,\n [bigfield] VARCHAR (MAX) collate Latin1_General_100_CI_AI_SC_UTF8 20\n) AS rows",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "master",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 4')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "select s.name as schema_name,\n    s.schema_id,\n    p.name as schema_owner\nfrom sys.schemas s\n    inner join sys.database_principals p\n        on p.principal_id = s.principal_id\norder by s.name\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "default",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/filename')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "-- This is auto-generated code\nSELECT\n    TOP 100 result.filename() FILE_NAME, *\nFROM\n    OPENROWSET(\n        BULK 'https://synapsepartyfs.dfs.core.windows.net/synapsepartyfs/date-format.csv',\n        FORMAT = 'CSV', PARSER_VERSION = '2.0' ) AS [result]\n\n\nCREATE PROCEDURE query_with_filename\nAS BEGIN\n    SELECT\n    TOP 100 result.filename() FILE_NAME, *\nFROM\n    OPENROWSET(\n        BULK 'https://synapsepartyfs.dfs.core.windows.net/synapsepartyfs/date-format.csv',\n        FORMAT = 'CSV', PARSER_VERSION = '2.0' ) AS [result]\nEND\n\nEXEC query_with_filename\n",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "externals",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/large_result_set_repro')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "WITH set1 AS (\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://synapsepartyfs.dfs.core.windows.net/synapsepartyfs/test.parquet',\n        FORMAT='PARQUET'\n    ) AS [results]\n),\nset2 AS (\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://synapsepartyfs.dfs.core.windows.net/synapsepartyfs/test.parquet',\n        FORMAT='PARQUET'\n    ) AS [results]\n),\nset3 AS (\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://synapsepartyfs.dfs.core.windows.net/synapsepartyfs/test.parquet',\n        FORMAT='PARQUET'\n    ) AS [results]\n)\nSELECT * FROM set1 \nLEFT JOIN set2 ON set1.Id = set2.Id\nLEFT JOIN set3 ON set1.Id = set3.Id",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "master",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/cosmos query')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"bigDataPool": {
+					"referenceName": "partyspark",
+					"type": "BigDataPoolReference"
+				},
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"runAsWorkspaceSystemIdentity": false,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "adb2ab11-fe6e-450f-a312-091cab722c7c"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"synapse_widget": {
+						"version": "0.1"
+					},
+					"enableDebugMode": false,
+					"language_info": {
+						"name": "python"
+					},
+					"a365ComputeOptions": {
+						"id": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Synapse/workspaces/synapseparty/bigDataPools/partyspark",
+						"name": "partyspark",
+						"type": "Spark",
+						"endpoint": "https://synapseparty.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/partyspark",
+						"auth": {
+							"type": "AAD",
+							"authResource": "https://dev.azuresynapse.net",
+							"authHeader": null
+						},
+						"sparkVersion": "3.1",
+						"nodeCount": 3,
+						"cores": 4,
+						"memory": 28,
+						"extraHeader": null
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "code",
+						"source": [
+							"df = spark.read.format(\"cosmos.olap\")\\\r\n",
+							"    .option(\"spark.synapse.linkedService\", \"RuisCosmosDb\")\\\r\n",
+							"    .option(\"spark.cosmos.container\", \"cunha_mongo_collection\")\\\r\n",
+							"    .load()"
+						],
+						"outputs": [],
+						"execution_count": 10
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/hello world')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"bigDataPool": {
+					"referenceName": "partyspark",
+					"type": "BigDataPoolReference"
+				},
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"runAsWorkspaceSystemIdentity": false,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "74461712-b38a-4b02-8974-de07053559ff"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"synapse_widget": {
+						"version": "0.1"
+					},
+					"enableDebugMode": false,
+					"language_info": {
+						"name": "python"
+					},
+					"a365ComputeOptions": {
+						"id": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Synapse/workspaces/synapseparty/bigDataPools/partyspark",
+						"name": "partyspark",
+						"type": "Spark",
+						"endpoint": "https://synapseparty.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/partyspark",
+						"auth": {
+							"type": "AAD",
+							"authResource": "https://dev.azuresynapse.net",
+							"authHeader": null
+						},
+						"sparkVersion": "3.1",
+						"nodeCount": 3,
+						"cores": 4,
+						"memory": 28,
+						"extraHeader": null
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "code",
+						"source": [
+							"import pkg_resources\r\n",
+							"for d in pkg_resources.working_set:\r\n",
+							"     print(d)"
+						],
+						"outputs": [],
+						"execution_count": 3
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/packages')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"bigDataPool": {
+					"referenceName": "partyspark",
+					"type": "BigDataPoolReference"
+				},
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"runAsWorkspaceSystemIdentity": false,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "25e1f36f-b515-4587-a65f-44b085f2f1b6"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"synapse_widget": {
+						"version": "0.1"
+					},
+					"enableDebugMode": false,
+					"language_info": {
+						"name": "python"
+					},
+					"a365ComputeOptions": {
+						"id": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Synapse/workspaces/synapseparty/bigDataPools/partyspark",
+						"name": "partyspark",
+						"type": "Spark",
+						"endpoint": "https://synapseparty.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/partyspark",
+						"auth": {
+							"type": "AAD",
+							"authResource": "https://dev.azuresynapse.net",
+							"authHeader": null
+						},
+						"sparkVersion": "3.1",
+						"nodeCount": 3,
+						"cores": 4,
+						"memory": 28,
+						"extraHeader": null
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "code",
+						"source": [
+							"import pkg_resources\r\n",
+							"for d in pkg_resources.working_set:\r\n",
+							"     print(d)"
+						],
+						"outputs": [],
+						"execution_count": 1
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/permissions')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"bigDataPool": {
+					"referenceName": "partyspark",
+					"type": "BigDataPoolReference"
+				},
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"runAsWorkspaceSystemIdentity": false,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "46f8af3b-3bd0-4fdf-ba4a-5dbd30f12265"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"synapse_widget": {
+						"version": "0.1"
+					},
+					"enableDebugMode": false,
+					"language_info": {
+						"name": "python"
+					},
+					"a365ComputeOptions": {
+						"id": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Synapse/workspaces/synapseparty/bigDataPools/partyspark",
+						"name": "partyspark",
+						"type": "Spark",
+						"endpoint": "https://synapseparty.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/partyspark",
+						"auth": {
+							"type": "AAD",
+							"authResource": "https://dev.azuresynapse.net",
+							"authHeader": null
+						},
+						"sparkVersion": "3.1",
+						"nodeCount": 3,
+						"cores": 4,
+						"memory": 28,
+						"extraHeader": null
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "code",
+						"source": [
+							"from notebookutils import mssparkutils\r\n",
+							"\r\n",
+							"spark.conf.set(\"spark.storage.synapse.linkedServiceName\", \"LimitedAccessStorage\")\r\n",
+							"spark.conf.set(\"fs.azure.account.oauth.provider.type\", \"com.microsoft.azure.synapse.tokenlibrary.LinkedServiceBasedTokenProvider\")\r\n",
+							"\r\n",
+							"print(mssparkutils.credentials.getConnectionStringOrCreds('LimitedAccessStorage'))\r\n",
+							"#print(mssparkutils.env.getUserName())\r\n",
+							"#print(mssparkutils.env.getUserId())\r\n",
+							"\r\n",
+							"datalake_root_path = \"abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/\"\r\n",
+							"print(mssparkutils.fs.ls(datalake_root_path + \"output\"))\r\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": 13
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/table creation')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"bigDataPool": {
+					"referenceName": "partyspark",
+					"type": "BigDataPoolReference"
+				},
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"runAsWorkspaceSystemIdentity": false,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "d48d24fe-0cb5-4e58-b584-2999ef59b3b1"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"synapse_widget": {
+						"version": "0.1"
+					},
+					"enableDebugMode": false,
+					"language_info": {
+						"name": "python"
+					},
+					"a365ComputeOptions": {
+						"id": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Synapse/workspaces/synapseparty/bigDataPools/partyspark",
+						"name": "partyspark",
+						"type": "Spark",
+						"endpoint": "https://synapseparty.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/partyspark",
+						"auth": {
+							"type": "AAD",
+							"authResource": "https://dev.azuresynapse.net",
+							"authHeader": null
+						},
+						"sparkVersion": "3.1",
+						"nodeCount": 3,
+						"cores": 4,
+						"memory": 28,
+						"extraHeader": null
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "code",
+						"source": [
+							"spark.conf.set(\"spark.storage.synapse.linkedServiceName\", \"LimitedAccessStorage\")\r\n",
+							"spark.conf.set(\"fs.azure.account.oauth.provider.type\", \"com.microsoft.azure.synapse.tokenlibrary.LinkedServiceBasedTokenProvider\")\r\n",
+							"\r\n",
+							"##spark.sql(\"CREATE TABLE limited.myparquettable(id int, name string, birthdate date) USING Parquet\")\r\n",
+							"##spark.sql(\"DROP TABLE limited.myparquettable\")"
+						],
+						"outputs": [],
+						"execution_count": 19
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"spark.sql(\"INSERT INTO limited.myparquettable (id, name, birthdate) VALUES (1, 'name', cast('2022-07-07' as date))\")"
+						],
+						"outputs": [],
+						"execution_count": 18
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/view test')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"bigDataPool": {
+					"referenceName": "partyspark",
+					"type": "BigDataPoolReference"
+				},
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"runAsWorkspaceSystemIdentity": false,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "21e4e6d6-091c-48c0-a902-56387339ae96"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"synapse_widget": {
+						"version": "0.1"
+					},
+					"enableDebugMode": false,
+					"language_info": {
+						"name": "python"
+					},
+					"a365ComputeOptions": {
+						"id": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Synapse/workspaces/synapseparty/bigDataPools/partyspark",
+						"name": "partyspark",
+						"type": "Spark",
+						"endpoint": "https://synapseparty.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/partyspark",
+						"auth": {
+							"type": "AAD",
+							"authResource": "https://dev.azuresynapse.net",
+							"authHeader": null
+						},
+						"sparkVersion": "3.1",
+						"nodeCount": 3,
+						"cores": 4,
+						"memory": 28,
+						"extraHeader": null
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "code",
+						"source": [
+							"df = spark.read\\\r\n",
+							".format(\"com.microsoft.sqlserver.jdbc.spark\")\\\r\n",
+							".option(\"url\", \"jdbc:sqlserver://synapseparty.sql.azuresynapse.net:1433;database=dedicatedparty;user=sqladminuser@synapseparty;password=protoVP01;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.sql.azuresynapse.net;loginTimeout=30;\")\\\r\n",
+							".option(\"dbTable\", \"datetester_view\")\\\r\n",
+							".load()\r\n",
+							"\r\n",
+							"print(df.first())"
+						],
+						"outputs": [],
+						"execution_count": 11
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Database1')]",
+			"type": "Microsoft.Synapse/workspaces/databases",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"Ddls": [
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Name": "Database1",
+							"EntityType": "DATABASE",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"Properties": {
+								"IsSyMSCDMDatabase": true,
+								"DerivedModelDBInfo": "{\"ModelDirectives\":{\"BaseModel\":{\"Name\":\"Automotive\",\"Version\":\"0.1.0\"}}}",
+								"x-ms-usageinfo": "AzureSynapseDatabaseTemplate"
+							},
+							"Source": {
+								"Provider": "ADLS",
+								"Location": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/Database1",
+								"Properties": {
+									"FormatType": "csv",
+									"LinkedServiceName": "synapseparty-WorkspaceDefaultStorage"
+								}
+							},
+							"PublishStatus": "PUBLISHED",
+							"ObjectVersion": 2,
+							"ObjectId": "7c47a9af-ce4c-4c52-aa33-a09d5623f37c"
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Name": "AlaskaNativeRegionalCorporation",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Namespace": {
+								"SchemaName": null,
+								"DatabaseName": "Database1",
+								"DatabaseId": null
+							},
+							"StorageDescriptor": {
+								"Distribution": null,
+								"Columns": [
+									{
+										"Name": "AnrcId",
+										"Description": "The U.S. Census Bureau offers representatives of the 12 nonprofit ANRCs the opportunity to review and update the ANRC boundaries. The U.S. Census Bureau first provided data for ANRCs for the 1990 census.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 0,
+											"Precision": 0,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation",
+											"Name": "AnrcId"
+										}
+									},
+									{
+										"Name": "AnrcName",
+										"Description": "The name of the Alaska Native Regional Corporation.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 128,
+											"Precision": 0,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation",
+											"Name": "AnrcName"
+										}
+									},
+									{
+										"Name": "NationId",
+										"Description": "The unique identifier of the Nation, which in this case is simply the US and anchors the geographic hierarchy.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 0,
+											"Precision": 0,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation",
+											"Name": "NationId"
+										}
+									}
+								],
+								"ColumnSetEntityName": "7053a879-f17f-4323-b96a-a1c4e95939f0",
+								"Format": {
+									"InputFormat": "org.apache.hadoop.mapred.SequenceFileInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat",
+									"FormatType": "csv",
+									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+									"Properties": {
+										"path": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/Database1/AlaskaNativeRegionalCorporation",
+										"delimiter": ",",
+										"firstRowAsHeader": "false",
+										"multiLine": "false",
+										"serialization.format": "1",
+										"escape": "\\",
+										"quote": "\"",
+										"FormatTypeSetToDatabaseDefault": true,
+										"header": "false"
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/Database1/AlaskaNativeRegionalCorporation",
+									"Properties": {
+										"LinkedServiceName": "synapseparty-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"None\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{\"AnrcId\":{\"entity\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\",\"name\":\"AnrcId\"},\"AnrcName\":{\"entity\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\",\"name\":\"AnrcName\"},\"NationId\":{\"entity\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\",\"name\":\"NationId\"}}}"
+								},
+								"Compressed": false,
+								"SerDeInfo": null,
+								"IsStoredAsSubdirectories": false
+							},
+							"Owner": null,
+							"CreateTime": 0,
+							"LastAccessTime": 0,
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false,
+							"ViewOriginalText": null,
+							"ViewExpandedText": null,
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"OriginObjectId": null,
+							"IsSharedEntity": false,
+							"PublishStatus": "PUBLISHED",
+							"Properties": {
+								"DerivedModelEntityInfo": "{\"entityDirectives\":{\"baseEntityReference\":{\"name\":\"AlaskaNativeRegionalCorporation\",\"path\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\"},\"description\":\"Alaska Native Regional Corporations (ANRCs) are corporate entities established to conduct both business and nonprofit affairs of Alaska Natives pursuant to the Alaska Native Claims Settlement Act of 1972 (Public Law 92-203). Twelve ANRCs are geographic entities that cover most of the state of Alaska (the Annette Island Reserve-an American Indian reservation-is excluded from any ANRC). (A thirteenth ANRC represents Alaska Natives who do not live in Alaska and do not identify with any of the 12 corporations; the U.S. Census Bureau does not provide data for this ANRC because it has no geographic extent.) The boundaries of ANRCs have been legally established.\\n\\nThe U.S. Census Bureau offers representatives of the 12 nonprofit ANRCs the opportunity to review and update the ANRC boundaries. The U.S. Census Bureau first provided data for ANRCs for the 1990 census.\\n \\nEach ANRC is assigned a five-digit Federal Information Processing Standards (FIPS) code, which is assigned in alphabetical order by ANRC name.\",\"primaryKey\":[\"AnrcId\"],\"projectionInfo\":{\"attributes\":[{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\",\"name\":\"AnrcId\"},\"dataType\":\"integer\",\"description\":\"The U.S. Census Bureau offers representatives of the 12 nonprofit ANRCs the opportunity to review and update the ANRC boundaries. The U.S. Census Bureau first provided data for ANRCs for the 1990 census.\",\"isNullable\":false,\"name\":\"AnrcId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\",\"name\":\"AnrcName\"},\"dataType\":\"string\",\"dataTypeLength\":128,\"description\":\"The name of the Alaska Native Regional Corporation.\",\"isNullable\":true,\"name\":\"AnrcName\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"AlaskaNativeRegionalCorporation.cdm.json/AlaskaNativeRegionalCorporation\",\"name\":\"NationId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of the Nation, which in this case is simply the US and anchors the geographic hierarchy.\",\"isNullable\":true,\"name\":\"NationId\"}]}}}",
+								"Description": "Alaska Native Regional Corporations (ANRCs) are corporate entities established to conduct both business and nonprofit affairs of Alaska Natives pursuant to the Alaska Native Claims Settlement Act of 1972 (Public Law 92-203). Twelve ANRCs are geographic entities that cover most of the state of Alaska (the Annette Island Reserve-an American Indian reservation-is excluded from any ANRC). (A thirteenth ANRC represents Alaska Natives who do not live in Alaska and do not identify with any of the 12 corporations; the U.S. Census Bureau does not provide data for this ANRC because it has no geographic extent.) The boundaries of ANRCs have been legally established.\n\nThe U.S. Census Bureau offers representatives of the 12 nonprofit ANRCs the opportunity to review and update the ANRC boundaries. The U.S. Census Bureau first provided data for ANRCs for the 1990 census.\n \nEach ANRC is assigned a five-digit Federal Information Processing Standards (FIPS) code, which is assigned in alphabetical order by ANRC name.",
+								"DisplayFolderInfo": "{\"name\":\"Geography\",\"colorCode\":\"#630454\"}",
+								"PrimaryKeys": "AnrcId",
+								"spark.sql.sources.provider": "csv",
+								"x-ms-usageinfo": "AzureSynapseDatabaseTemplate",
+								"spark.sql.sources.schema.numParts": "1",
+								"spark.sql.sources.schema.part.0": "{\"type\":\"struct\",\"fields\":[{\"name\":\"AnrcId\",\"type\":\"integer\",\"nullable\":false,\"metadata\":{}},{\"name\":\"AnrcName\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"NationId\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}"
+							},
+							"ObjectVersion": 1,
+							"ObjectId": "2493b59a-82a3-44ad-bc73-2a1b3d96a765",
+							"Description": "Alaska Native Regional Corporations (ANRCs) are corporate entities established to conduct both business and nonprofit affairs of Alaska Natives pursuant to the Alaska Native Claims Settlement Act of 1972 (Public Law 92-203). Twelve ANRCs are geographic entities that cover most of the state of Alaska (the Annette Island Reserve-an American Indian reservation-is excluded from any ANRC). (A thirteenth ANRC represents Alaska Natives who do not live in Alaska and do not identify with any of the 12 corporations; the U.S. Census Bureau does not provide data for this ANRC because it has no geographic extent.) The boundaries of ANRCs have been legally established.\n\nThe U.S. Census Bureau offers representatives of the 12 nonprofit ANRCs the opportunity to review and update the ANRC boundaries. The U.S. Census Bureau first provided data for ANRCs for the 1990 census.\n \nEach ANRC is assigned a five-digit Federal Information Processing Standards (FIPS) code, which is assigned in alphabetical order by ANRC name."
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Name": "ctas_from_lake_table",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Namespace": {
+								"SchemaName": null,
+								"DatabaseName": "Database1",
+								"DatabaseId": null
+							},
+							"StorageDescriptor": {
+								"Distribution": null,
+								"Columns": [
+									{
+										"Name": "firstname",
+										"Description": null,
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 0,
+											"Precision": 0,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "lastname",
+										"Description": null,
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 0,
+											"Precision": 0,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									}
+								],
+								"ColumnSetEntityName": "1cfb79cf-ae91-409e-84c8-425b388f5899",
+								"Format": {
+									"InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
+									"FormatType": "textfile",
+									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+									"Properties": {
+										"serialization.format": "1"
+									}
+								},
+								"Source": {
+									"Location": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/Database1/ctas_from_lake_table",
+									"Properties": {
+										"LocationSetToDatabaseDefault": false
+									}
+								},
+								"Properties": {
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
+								},
+								"Compressed": false,
+								"SerDeInfo": null,
+								"IsStoredAsSubdirectories": false
+							},
+							"Owner": "trusted-service-user",
+							"CreateTime": 1677760342,
+							"LastAccessTime": 0,
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false,
+							"ViewOriginalText": null,
+							"ViewExpandedText": null,
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"OriginObjectId": null,
+							"IsSharedEntity": false,
+							"PublishStatus": "PUBLISHED",
+							"Properties": {
+								"Transient_lastDdlTime": "1677760344",
+								"NumFiles": "1",
+								"TotalSize": "13",
+								"PrimaryKeys": "",
+								"spark.sql.sources.schema.part.0": "{\"type\":\"struct\",\"fields\":[{\"name\":\"firstname\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"lastname\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+								"spark.sql.sources.schema.numParts": "1",
+								"spark.sql.create.version": "3.1.3.5.0-83093024",
+								"spark.sql.sources.provider": "textfile"
+							},
+							"ObjectVersion": 2,
+							"ObjectId": "a2a7a43e-eb57-4479-b310-36370dfa7abd"
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Name": "myparquettable",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Namespace": {
+								"SchemaName": null,
+								"DatabaseName": "Database1",
+								"DatabaseId": null
+							},
+							"StorageDescriptor": {
+								"Distribution": null,
+								"Columns": [
+									{
+										"Name": "id",
+										"Description": null,
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 0,
+											"Precision": 0,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "name",
+										"Description": null,
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 0,
+											"Precision": 0,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "birthdate",
+										"Description": null,
+										"OriginDataTypeName": {
+											"TypeName": "date",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 0,
+											"Precision": 0,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "date"
+											}
+										}
+									}
+								],
+								"ColumnSetEntityName": "463d7536-e58b-4663-a356-c42dce4f5207",
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/Database1/myparquettable",
+									"Properties": {
+										"LinkedServiceName": "",
+										"LocationSetToDatabaseDefault": false
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"None\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
+								},
+								"Compressed": false,
+								"SerDeInfo": null,
+								"IsStoredAsSubdirectories": false,
+								"Format": {
+									"Properties": {}
+								}
+							},
+							"Owner": "trusted-service-user",
+							"CreateTime": 1659384435,
+							"LastAccessTime": 0,
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false,
+							"ViewOriginalText": null,
+							"ViewExpandedText": null,
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"OriginObjectId": null,
+							"IsSharedEntity": false,
+							"PublishStatus": "PUBLISHED",
+							"Properties": {
+								"Transient_lastDdlTime": "1659384435",
+								"PrimaryKeys": "",
+								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
+								"spark.sql.sources.schema.part.0": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"birthdate\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}}]}",
+								"spark.sql.sources.schema.numParts": "1",
+								"spark.sql.sources.provider": "Parquet",
+								"spark.sql.create.version": "3.1.2.5.0-66290225"
+							},
+							"ObjectVersion": 2,
+							"ObjectId": "a8340edd-3b3c-474c-b49b-cc264cdbaf3e"
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Name": "ui_lake_table",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Namespace": {
+								"SchemaName": null,
+								"DatabaseName": "Database1",
+								"DatabaseId": null
+							},
+							"Partitioning": {
+								"PartitionFunctionType": null,
+								"Keys": null
+							},
+							"StorageDescriptor": {
+								"Distribution": null,
+								"Columns": [
+									{
+										"Name": "firstname",
+										"Description": null,
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Precision": 0,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "lastname",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Precision": 0,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									}
+								],
+								"ColumnSetEntityName": "3e88ae1d-1504-48d0-a063-a66f6f05c8c0",
+								"Format": {
+									"InputFormat": "org.apache.hadoop.mapred.SequenceFileInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat",
+									"FormatType": "csv",
+									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+									"Properties": {
+										"path": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/Database1/ui_lake_table",
+										"delimiter": ",",
+										"firstRowAsHeader": "false",
+										"multiLine": "false",
+										"serialization.format": "1",
+										"escape": "\\",
+										"quote": "\"",
+										"FormatTypeSetToDatabaseDefault": true,
+										"header": "false"
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/Database1/ui_lake_table",
+									"Properties": {
+										"LinkedServiceName": "synapseparty-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"None\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
+								},
+								"Compressed": false,
+								"SerDeInfo": null,
+								"IsStoredAsSubdirectories": false
+							},
+							"Owner": null,
+							"CreateTime": 0,
+							"LastAccessTime": 0,
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false,
+							"ViewOriginalText": null,
+							"ViewExpandedText": null,
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"OriginObjectId": null,
+							"IsSharedEntity": false,
+							"PublishStatus": "PUBLISHED",
+							"Properties": {
+								"Description": "created from the UI",
+								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
+								"PrimaryKeys": "",
+								"spark.sql.sources.provider": "csv",
+								"spark.sql.sources.schema.numParts": "1",
+								"spark.sql.sources.schema.part.0": "{\"type\":\"struct\",\"fields\":[{\"name\":\"firstname\",\"type\":\"string\",\"nullable\":false,\"metadata\":{}},{\"name\":\"lastname\",\"type\":\"string\",\"nullable\":false,\"metadata\":{}}]}"
+							},
+							"ObjectVersion": 1,
+							"ObjectId": "f96508cf-f854-46a3-b0f8-939afc5bda4f",
+							"Description": "created from the UI"
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/limited')]",
+			"type": "Microsoft.Synapse/workspaces/databases",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"Ddls": [
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Name": "limited",
+							"EntityType": "DATABASE",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"Properties": {
+								"IsSyMSCDMDatabase": true
+							},
+							"Source": {
+								"Provider": "ADLS",
+								"Location": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/",
+								"Properties": {
+									"FormatType": "parquet",
+									"LinkedServiceName": "LimitedAccessStorage"
+								}
+							},
+							"PublishStatus": "PUBLISHED",
+							"ObjectVersion": 1,
+							"ObjectId": "5e47da0e-7622-4c41-a8db-3ad067a52bb7"
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Name": "myparquettable",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Namespace": {
+								"SchemaName": null,
+								"DatabaseName": "limited",
+								"DatabaseId": null
+							},
+							"StorageDescriptor": {
+								"Distribution": null,
+								"Columns": [
+									{
+										"Name": "id",
+										"Description": null,
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 0,
+											"Precision": 0,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "name",
+										"Description": null,
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 0,
+											"Precision": 0,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "birthdate",
+										"Description": null,
+										"OriginDataTypeName": {
+											"TypeName": "date",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 0,
+											"Precision": 0,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "date"
+											}
+										}
+									}
+								],
+								"ColumnSetEntityName": "6cc34a3d-a3dc-4ec0-9a5f-25b8040fb4f0",
+								"Format": {
+									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+									"FormatType": "Parquet",
+									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+									"Properties": {
+										"path": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/myparquettable",
+										"serialization.format": "1"
+									}
+								},
+								"Source": {
+									"Location": "abfss://synapsepartyfs@synapsepartyfs.dfs.core.windows.net/myparquettable",
+									"Properties": {
+										"LocationSetToDatabaseDefault": false
+									}
+								},
+								"Properties": {
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
+								},
+								"Compressed": false,
+								"SerDeInfo": null,
+								"IsStoredAsSubdirectories": false
+							},
+							"Owner": "trusted-service-user",
+							"CreateTime": 1659386212,
+							"LastAccessTime": 0,
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false,
+							"ViewOriginalText": null,
+							"ViewExpandedText": null,
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"OriginObjectId": null,
+							"IsSharedEntity": false,
+							"PublishStatus": "PUBLISHED",
+							"Properties": {
+								"Transient_lastDdlTime": "1659386212",
+								"PrimaryKeys": "",
+								"spark.sql.sources.schema.part.0": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"birthdate\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}}]}",
+								"spark.sql.sources.schema.numParts": "1",
+								"spark.sql.sources.provider": "Parquet",
+								"spark.sql.create.version": "3.1.2.5.0-66290225"
+							},
+							"ObjectVersion": 1,
+							"ObjectId": "248a6b5a-5f0a-4e61-9794-9e23faabc56b"
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/partyspark')]",
+			"type": "Microsoft.Synapse/workspaces/bigDataPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"autoPause": {
+					"enabled": true,
+					"delayInMinutes": 10
+				},
+				"autoScale": {
+					"enabled": false,
+					"maxNodeCount": 10,
+					"minNodeCount": 3
+				},
+				"nodeCount": 3,
+				"nodeSize": "Small",
+				"nodeSizeFamily": "MemoryOptimized",
+				"sparkVersion": "3.1",
+				"libraryRequirements": {
+					"content": "name: base\r\nchannels:\r\n  - conda-forge\r\n  - conda-forge/label/gcc7\r\n  - defaults\r\ndependencies:\r\n  - azure-keyvault-secrets=4.3.0=pyhd8ed1ab_0\r\n  \r\n\r\n",
+					"filename": "environment.yml",
+					"time": "2023-11-28T18:59:57.6471552Z"
+				},
+				"isComputeIsolationEnabled": false,
+				"sparkConfigProperties": {
+					"configurationType": "File",
+					"filename": "spark_conf.txt",
+					"content": "spark.driver.maxResultSize 32g\r\nspark.executor.memory 112g\r\nspark.executor.cores 16\r\nspark.executor.instances 10\r\n",
+					"time": "2023-11-28T18:59:57.6471552Z"
+				},
+				"sessionLevelPackagesEnabled": true,
+				"customLibraries": [
+					{
+						"name": "ceja-0.3.0-py3-none-any.whl",
+						"path": "synapseparty/libraries/ceja-0.3.0-py3-none-any.whl",
+						"containerName": "prep",
+						"uploadedTimestamp": "0001-01-01T00:00:00+00:00",
+						"type": "whl"
+					},
+					{
+						"name": "jellyfish-0.6.0-py3-none-any.whl",
+						"path": "synapseparty/libraries/jellyfish-0.6.0-py3-none-any.whl",
+						"containerName": "prep",
+						"uploadedTimestamp": "0001-01-01T00:00:00+00:00",
+						"type": "whl"
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [],
+			"location": "eastus"
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/newpool')]",
+			"type": "Microsoft.Synapse/workspaces/bigDataPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"autoPause": {
+					"enabled": true,
+					"delayInMinutes": 15
+				},
+				"autoScale": {
+					"enabled": false,
+					"maxNodeCount": 10,
+					"minNodeCount": 3
+				},
+				"nodeCount": 3,
+				"nodeSize": "Small",
+				"nodeSizeFamily": "MemoryOptimized",
+				"sparkVersion": "3.4",
+				"isComputeIsolationEnabled": false,
+				"sessionLevelPackagesEnabled": false,
+				"annotations": []
+			},
+			"dependsOn": [],
+			"location": "eastus"
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/dedicatedparty')]",
+			"type": "Microsoft.Synapse/workspaces/sqlPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"collation": "SQL_Latin1_General_CP1_CI_AS",
+				"maxSizeBytes": 263882790666240,
+				"annotations": []
+			},
+			"dependsOn": [],
+			"location": "eastus"
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/default/AzureDataLakeStorage1')]",
+			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"privateLinkResourceId": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Storage/storageAccounts/synapsepartyfs",
+				"groupId": "dfs",
+				"fqdns": [
+					"synapsepartyfs.dfs.core.windows.net"
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/default/AzureMLService1')]",
+			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"privateLinkResourceId": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.MachineLearningServices/workspaces/mlparty",
+				"groupId": "amlworkspace",
+				"fqdns": [
+					"ml-mlparty-eastus-6b8fe9b9-d6a0-468f-969c-44bb92279664.eastus.notebooks.azure.net"
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/default/AzureSynapseAnalytics951')]",
+			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"privateLinkResourceId": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Synapse/workspaces/synapsepartynovnet",
+				"groupId": "sql",
+				"fqdns": [
+					"synapsepartynovnet.sql.azuresynapse.net"
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/default/RuisCosmosDb')]",
+			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"privateLinkResourceId": "/subscriptions/7b1f20ef-1976-4cda-8578-8ed55045bd7a/resourceGroups/rg-cunha/providers/Microsoft.DocumentDB/databaseAccounts/cunha-cosmos-mongodb",
+				"groupId": "MongoDB",
+				"fqdns": [
+					"cunha-cosmos-mongodb-northeurope.mongo.cosmos.azure.com"
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/default/RuisCosmosDbAnalytical')]",
+			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"privateLinkResourceId": "/subscriptions/7b1f20ef-1976-4cda-8578-8ed55045bd7a/resourceGroups/rg-cunha/providers/Microsoft.DocumentDB/databaseAccounts/cunha-cosmos-mongodb",
+				"groupId": "Analytical",
+				"fqdns": [
+					"1718409691704451436.blob.core.windows.net"
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/default/sqldb-endpoint')]",
+			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"privateLinkResourceId": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Sql/servers/partysqldb",
+				"groupId": "sqlServer",
+				"fqdns": [
+					"partysqldb.database.windows.net"
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/default/synapse-ws-sql--synapseparty')]",
+			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"privateLinkResourceId": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Synapse/workspaces/synapseparty",
+				"groupId": "sql",
+				"fqdns": [
+					"synapseparty.59666690-c44a-451b-bb72-662f25a5538f.sql.azuresynapse.net"
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/default/synapse-ws-sqlOnDemand--synapseparty')]",
+			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"privateLinkResourceId": "/subscriptions/78e47d63-c67e-4ea9-87b7-fd1f5613ae8f/resourceGroups/synapse-rg/providers/Microsoft.Synapse/workspaces/synapseparty",
+				"groupId": "sqlOnDemand",
+				"fqdns": [
+					"synapseparty-ondemand.59666690-c44a-451b-bb72-662f25a5538f.sql.azuresynapse.net"
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/managedVirtualNetworks/default')]"
+			]
+		}
+	]
+}
