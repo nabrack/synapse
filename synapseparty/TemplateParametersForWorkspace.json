@@ -29,6 +29,9 @@
 		"LimitedAccessStorage_servicePrincipalCredential": {
 			"value": ""
 		},
+		"LocalDedicatedSqlUser_password": {
+			"value": ""
+		},
 		"OtherSynapseWorkspace_connectionString": {
 			"value": ""
 		},
@@ -43,9 +46,6 @@
 		},
 		"synapseparty-WorkspaceDefaultSqlServer_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapseparty.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
-		},
-		"LocalDedicatedSqlUser_password": {
-			"value": ""
 		},
 		"AzureDataExplorer1_properties_typeProperties_database": {
 			"value": "proxy"
@@ -74,15 +74,6 @@
 		"LimitedAccessStorage_properties_typeProperties_servicePrincipalId": {
 			"value": "1ff1b361-da38-46b4-b18e-7114877d6deb"
 		},
-		"RestService1_properties_typeProperties_url": {
-			"value": "https://jsonplaceholder.typicode.com/"
-		},
-		"RuisCosmosDb_properties_typeProperties_database": {
-			"value": "cunha_mongo_db"
-		},
-		"synapseparty-WorkspaceDefaultStorage_properties_typeProperties_url": {
-			"value": "https://synapsepartyfs.dfs.core.windows.net"
-		},
 		"LocalDedicatedSqlUser_properties_typeProperties_server": {
 			"value": "synapseparty.sql.azuresynapse.net"
 		},
@@ -91,6 +82,15 @@
 		},
 		"LocalDedicatedSqlUser_properties_typeProperties_userName": {
 			"value": "sqladminuser"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"value": "https://jsonplaceholder.typicode.com/"
+		},
+		"RuisCosmosDb_properties_typeProperties_database": {
+			"value": "cunha_mongo_db"
+		},
+		"synapseparty-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://synapsepartyfs.dfs.core.windows.net"
 		}
 	}
 }
